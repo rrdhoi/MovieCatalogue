@@ -10,23 +10,29 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jetpack.movieapp.databinding.FragmentMovieBinding
 import com.jetpack.movieapp.viewmodel.ViewModelFactory
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.kodein
+import org.kodein.di.generic.instance
 
-class MovieFragment : Fragment() {
+class MovieFragment : Fragment(), KodeinAware {
+
     private lateinit var binding: FragmentMovieBinding
+    override val kodein: Kodein by kodein()
+    private val factory: ViewModelFactory by instance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding = FragmentMovieBinding.inflate(layoutInflater,container, false)
+        binding = FragmentMovieBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val factory = ViewModelFactory.getInstance(requireContext())
         val viewModel = ViewModelProvider(this, factory)[MovieViewModel::class.java]
 
         val movieAdapter = MovieAdapter()
@@ -48,5 +54,6 @@ class MovieFragment : Fragment() {
             adapter = movieAdapter
         }
     }
+
 
 }

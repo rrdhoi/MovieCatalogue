@@ -13,9 +13,15 @@ import com.jetpack.movieapp.R
 import com.jetpack.movieapp.data.MovieUpComing
 import com.jetpack.movieapp.databinding.FragmentTvshowBinding
 import com.jetpack.movieapp.viewmodel.ViewModelFactory
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.kodein
+import org.kodein.di.generic.instance
 
-class TvshowFragment : Fragment(), TvshowFragmentCallback {
+class TvshowFragment : Fragment(), TvshowFragmentCallback, KodeinAware {
     private lateinit var binding: FragmentTvshowBinding
+    override val kodein: Kodein by kodein()
+    private val factory: ViewModelFactory by instance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,7 +35,6 @@ class TvshowFragment : Fragment(), TvshowFragmentCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val factory = ViewModelFactory.getInstance(requireContext())
         val viewModel = ViewModelProvider(this, factory)[TvShowViewModel::class.java]
 
         val tvShowAdapter = TvshowAdapter(this)
@@ -37,7 +42,7 @@ class TvshowFragment : Fragment(), TvshowFragmentCallback {
         binding.progressBar.visibility = View.VISIBLE
 
         this.lifecycleScope.launchWhenStarted {
-            viewModel.getTvShow().observe(viewLifecycleOwner , {
+            viewModel.getTvShow().observe(viewLifecycleOwner, {
                 binding.progressBar.visibility = View.GONE
 
                 tvShowAdapter.setDataList(it)

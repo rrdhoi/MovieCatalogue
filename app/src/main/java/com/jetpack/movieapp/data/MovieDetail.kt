@@ -1,6 +1,6 @@
 package com.jetpack.movieapp.data
 
-data class MovieDetail (
+data class MovieDetail(
     var movieId: Int?,
     var title: String?,
     var description: String?,
@@ -8,7 +8,7 @@ data class MovieDetail (
     var bookmarked: Boolean? = false
 )
 
-data class ProCompanies (
+data class ProCompanies(
     val name: String?,
     val imagePath: String?
 )

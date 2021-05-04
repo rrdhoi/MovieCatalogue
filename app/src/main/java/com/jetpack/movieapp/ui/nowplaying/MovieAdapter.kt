@@ -15,18 +15,19 @@ import com.jetpack.movieapp.data.MovieNowPlaying
 import com.jetpack.movieapp.databinding.ItemsNowplayingBinding
 import com.jetpack.movieapp.ui.detail.DetailMovieActivity
 
-class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     private var movieList = ArrayList<MovieNowPlaying>()
 
-    fun setDataCourses(movie: List<MovieNowPlaying>?){
-        if (movie == null){
+    fun setDataCourses(movie: List<MovieNowPlaying>?) {
+        if (movie == null) {
             return
         }
         this.movieList.clear()
         this.movieList.addAll(movie)
     }
 
-    class MovieViewHolder(private val binding: ItemsNowplayingBinding) : RecyclerView.ViewHolder(binding.root) {
+    class MovieViewHolder(private val binding: ItemsNowplayingBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: MovieNowPlaying) {
             with(binding) {
                 tvItemTitle.text = movie.title
@@ -37,7 +38,7 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
                     .load("https://image.tmdb.org/t/p/w500" + movie.imagePath)
                     .apply(RequestOptions.placeholderOf(R.drawable.ic_loading))
                     .error(R.drawable.ic_error)
-                    .into(object: CustomTarget<Bitmap>(){
+                    .into(object : CustomTarget<Bitmap>() {
                         override fun onResourceReady(
                             resource: Bitmap,
                             transition: Transition<in Bitmap>?
@@ -63,7 +64,8 @@ class MovieAdapter: RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         parent: ViewGroup,
         viewType: Int
     ): MovieViewHolder {
-        val binding: ItemsNowplayingBinding = ItemsNowplayingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding: ItemsNowplayingBinding =
+            ItemsNowplayingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MovieViewHolder(binding)
     }
 

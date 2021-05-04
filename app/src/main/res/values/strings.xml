@@ -1,11 +1,9 @@
 <resources>
     <string name="app_name">MovieApp</string>
-    <string name="api_key">a653726e8a6c91ac70cdf09cf1308db5</string>
 
     <string name="title_activity_detail_movie">Detail Movie</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
-    <string name="description_movie">Deskripsi Kelas</string>
     <string name="movie">Movie</string>
     <string name="tvshow">TvShow</string>
     <string name="share_text">Saksikan segera film %s di tv kesayangan anda</string>

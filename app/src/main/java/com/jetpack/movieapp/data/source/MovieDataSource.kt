@@ -7,11 +7,11 @@ import com.jetpack.movieapp.data.MovieUpComing
 import com.jetpack.movieapp.data.ProCompanies
 
 interface MovieDataSource {
-   fun getAllNowPlaying(): LiveData<List<MovieNowPlaying>>
+    fun getAllNowPlaying(): LiveData<List<MovieNowPlaying>>
 
-   fun getAllUpComing(): LiveData<List<MovieUpComing>>
+    fun getAllUpComing(): LiveData<List<MovieUpComing>>
 
-   fun getDetailMovie(movieId: Int): LiveData<MovieDetail>
+    fun getDetailMovie(movieId: Int): LiveData<MovieDetail>
 
-   fun getAllProCompanies(movieId: Int): LiveData<List<ProCompanies>>
+    fun getAllProCompanies(movieId: Int): LiveData<List<ProCompanies>>
 }

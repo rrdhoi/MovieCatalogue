@@ -17,10 +17,17 @@ import com.jetpack.movieapp.data.MovieDetail
 import com.jetpack.movieapp.databinding.ActivityDetailMovieBinding
 import com.jetpack.movieapp.databinding.ContentDetailMovieBinding
 import com.jetpack.movieapp.viewmodel.ViewModelFactory
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.kodein
+import org.kodein.di.generic.instance
 
-class DetailMovieActivity : AppCompatActivity() {
+class DetailMovieActivity : AppCompatActivity(), KodeinAware {
     private lateinit var bindingDetailActivity: ActivityDetailMovieBinding
     private lateinit var bindingDetailContent: ContentDetailMovieBinding
+
+    override val kodein: Kodein by kodein()
+    private val factory: ViewModelFactory by instance()
 
     companion object {
         const val EXTRA_MOVIE = "extra_movie"
@@ -37,7 +44,6 @@ class DetailMovieActivity : AppCompatActivity() {
 
         val proCompaniesAdapter = ProductionCompaniesAdapter()
 
-        val factory = ViewModelFactory.getInstance(this)
         val detailViewModel = ViewModelProvider(this, factory)[DetailMovieViewModel::class.java]
 
         bindingDetailActivity.nestedScrollView.visibility = View.INVISIBLE
@@ -64,7 +70,8 @@ class DetailMovieActivity : AppCompatActivity() {
         })
 
         with(bindingDetailContent.rvProductionCompanies) {
-            layoutManager = LinearLayoutManager(this@DetailMovieActivity, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(this@DetailMovieActivity, LinearLayoutManager.HORIZONTAL, false)
             setHasFixedSize(true)
             this.adapter = proCompaniesAdapter
         }
@@ -82,7 +89,7 @@ class DetailMovieActivity : AppCompatActivity() {
                 .load("https://image.tmdb.org/t/p/w500" + movie.imagePath)
                 .apply(RequestOptions.placeholderOf(R.drawable.ic_loading))
                 .error(R.drawable.ic_error)
-                .into(object: CustomTarget<Bitmap>(){
+                .into(object : CustomTarget<Bitmap>() {
                     override fun onResourceReady(
                         resource: Bitmap,
                         transition: Transition<in Bitmap>?

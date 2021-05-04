@@ -15,7 +15,8 @@ import com.jetpack.movieapp.R
 import com.jetpack.movieapp.data.ProCompanies
 import com.jetpack.movieapp.databinding.ItemsActorsBinding
 
-class ProductionCompaniesAdapter: RecyclerView.Adapter<ProductionCompaniesAdapter.ProCompaniesHolder>() {
+class ProductionCompaniesAdapter :
+    RecyclerView.Adapter<ProductionCompaniesAdapter.ProCompaniesHolder>() {
     private val listProCompanies = ArrayList<ProCompanies>()
 
     fun setModules(modules: List<ProCompanies>?) {
@@ -24,7 +25,8 @@ class ProductionCompaniesAdapter: RecyclerView.Adapter<ProductionCompaniesAdapte
         this.listProCompanies.addAll(modules)
     }
 
-    inner class ProCompaniesHolder(private val binding: ItemsActorsBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class ProCompaniesHolder(private val binding: ItemsActorsBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(proCompany: ProCompanies) {
             binding.tvName.text = proCompany.name
 
@@ -34,7 +36,7 @@ class ProductionCompaniesAdapter: RecyclerView.Adapter<ProductionCompaniesAdapte
                 .transform(RoundedCorners(50))
                 .apply(RequestOptions.placeholderOf(R.drawable.ic_loading))
                 .error(R.drawable.ic_error)
-                .into(object: CustomTarget<Bitmap>(){
+                .into(object : CustomTarget<Bitmap>() {
                     override fun onResourceReady(
                         resource: Bitmap,
                         transition: Transition<in Bitmap>?
@@ -54,7 +56,8 @@ class ProductionCompaniesAdapter: RecyclerView.Adapter<ProductionCompaniesAdapte
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProCompaniesHolder {
-        val itemProCompaniesBinding = ItemsActorsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val itemProCompaniesBinding =
+            ItemsActorsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ProCompaniesHolder(itemProCompaniesBinding)
     }
 

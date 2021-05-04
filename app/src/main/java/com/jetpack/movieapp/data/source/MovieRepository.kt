@@ -11,16 +11,7 @@ import com.jetpack.movieapp.data.source.remote.response.DetailMovieResponse
 import com.jetpack.movieapp.data.source.remote.response.NowPlaying
 import com.jetpack.movieapp.data.source.remote.response.UpComing
 
-class MovieRepository private constructor(private val remoteDataSource: RemoteDataSource): MovieDataSource{
-
-    companion object{
-        @Volatile
-        private var instance: MovieRepository? = null
-
-        fun getInstance(remoteData: RemoteDataSource): MovieRepository = instance ?: synchronized(this) {
-            instance ?: MovieRepository(remoteData).apply { instance = this }
-        }
-    }
+class MovieRepository(private val remoteDataSource: RemoteDataSource) : MovieDataSource {
 
     override fun getAllNowPlaying(): LiveData<List<MovieNowPlaying>> {
         val movieResults = MutableLiveData<List<MovieNowPlaying>>()
@@ -30,7 +21,7 @@ class MovieRepository private constructor(private val remoteDataSource: RemoteDa
                 val movieList = ArrayList<MovieNowPlaying>()
 
                 if (nowPlayingMovie != null) {
-                    for (response in nowPlayingMovie){
+                    for (response in nowPlayingMovie) {
                         val movie = MovieNowPlaying(
                             response?.id,
                             response?.title,
@@ -78,9 +69,9 @@ class MovieRepository private constructor(private val remoteDataSource: RemoteDa
     override fun getDetailMovie(movieId: Int): LiveData<MovieDetail> {
         val movieResults = MutableLiveData<MovieDetail>()
 
-        remoteDataSource.getDetailMovie(movieId, object: RemoteDataSource.LoadDetailMovie {
+        remoteDataSource.getDetailMovie(movieId, object : RemoteDataSource.LoadDetailMovie {
             override fun onDetailMovie(detailMovie: DetailMovieResponse?) {
-                if (detailMovie != null){
+                if (detailMovie != null) {
                     val movie = MovieDetail(
                         detailMovie.id,
                         detailMovie.title,
@@ -101,12 +92,12 @@ class MovieRepository private constructor(private val remoteDataSource: RemoteDa
     override fun getAllProCompanies(movieId: Int): LiveData<List<ProCompanies>> {
         val movieProCompanies = MutableLiveData<List<ProCompanies>>()
 
-        remoteDataSource.getDetailMovie(movieId, object: RemoteDataSource.LoadDetailMovie {
+        remoteDataSource.getDetailMovie(movieId, object : RemoteDataSource.LoadDetailMovie {
             override fun onDetailMovie(detailMovie: DetailMovieResponse?) {
                 val listProCompanies = ArrayList<ProCompanies>()
 
                 if (detailMovie != null) {
-                    for (item in detailMovie.productionCompanies!!){
+                    for (item in detailMovie.productionCompanies!!) {
                         val proCompany = ProCompanies(
                             item?.name,
                             item?.logoPath

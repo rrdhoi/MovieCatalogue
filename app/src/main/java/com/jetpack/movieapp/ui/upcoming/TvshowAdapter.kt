@@ -15,19 +15,21 @@ import com.jetpack.movieapp.data.MovieUpComing
 import com.jetpack.movieapp.databinding.ItemsUpcomingBinding
 import com.jetpack.movieapp.ui.detail.DetailMovieActivity
 
-class TvshowAdapter(private val callback: TvshowFragmentCallback): RecyclerView.Adapter<TvshowAdapter.TvshowViewHolder>() {
+class TvshowAdapter(private val callback: TvshowFragmentCallback) :
+    RecyclerView.Adapter<TvshowAdapter.TvshowViewHolder>() {
     private var movieList = ArrayList<MovieUpComing>()
 
-    fun setDataList(movies: List<MovieUpComing>?){
+    fun setDataList(movies: List<MovieUpComing>?) {
         if (movies == null) {
             return
         }
         this.movieList.clear()
         this.movieList.addAll(movies)
     }
-    
-    inner class TvshowViewHolder(private val binding: ItemsUpcomingBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: MovieUpComing){
+
+    inner class TvshowViewHolder(private val binding: ItemsUpcomingBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(movie: MovieUpComing) {
             with(binding) {
                 tvItemTitle.text = movie.title
                 tvItemVoteAverage.text = movie.voteAverage.toString()
@@ -47,7 +49,7 @@ class TvshowAdapter(private val callback: TvshowFragmentCallback): RecyclerView.
                     .load("https://image.tmdb.org/t/p/w500" + movie.imagePath)
                     .apply(RequestOptions.placeholderOf(R.drawable.ic_loading))
                     .error(R.drawable.ic_error)
-                    .into(object: CustomTarget<Bitmap>(){
+                    .into(object : CustomTarget<Bitmap>() {
                         override fun onResourceReady(
                             resource: Bitmap,
                             transition: Transition<in Bitmap>?
@@ -67,7 +69,8 @@ class TvshowAdapter(private val callback: TvshowFragmentCallback): RecyclerView.
         parent: ViewGroup,
         viewType: Int
     ): TvshowAdapter.TvshowViewHolder {
-        val binding = ItemsUpcomingBinding.inflate(LayoutInflater.from(parent.context),parent, false)
+        val binding =
+            ItemsUpcomingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TvshowViewHolder(binding)
     }
 

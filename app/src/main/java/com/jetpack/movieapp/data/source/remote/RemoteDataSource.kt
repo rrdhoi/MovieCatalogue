@@ -36,7 +36,7 @@ class RemoteDataSource {
         EspressoIdlingResource.increment()
 
         val client = ApiConfig.getApiService().getUpComing("a653726e8a6c91ac70cdf09cf1308db5")
-        client.enqueue(object : Callback<UpComingResponse>{
+        client.enqueue(object : Callback<UpComingResponse> {
             override fun onResponse(
                 call: Call<UpComingResponse>,
                 response: Response<UpComingResponse>
@@ -52,14 +52,15 @@ class RemoteDataSource {
                 EspressoIdlingResource.decrement()
             }
 
-        } )
+        })
     }
 
     fun getDetailMovie(movieId: Int, callback: LoadDetailMovie) {
         EspressoIdlingResource.increment()
 
-        val client = ApiConfig.getApiService().getDetailMovie(movieId, "a653726e8a6c91ac70cdf09cf1308db5")
-        client.enqueue(object : Callback<DetailMovieResponse>{
+        val client =
+            ApiConfig.getApiService().getDetailMovie(movieId, "a653726e8a6c91ac70cdf09cf1308db5")
+        client.enqueue(object : Callback<DetailMovieResponse> {
             override fun onResponse(
                 call: Call<DetailMovieResponse>,
                 response: Response<DetailMovieResponse>
@@ -75,11 +76,11 @@ class RemoteDataSource {
                 EspressoIdlingResource.decrement()
             }
 
-        } )
+        })
     }
 
     interface LoadNowPlaying {
-        fun onAllNowPlaying(nowPlayingMovie : List<NowPlaying?>?)
+        fun onAllNowPlaying(nowPlayingMovie: List<NowPlaying?>?)
     }
 
     interface LoadUpComing {
